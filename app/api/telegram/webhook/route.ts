@@ -23,7 +23,7 @@ import { LeadStatus, PackageSlug } from '@/lib/types'
 
 const SECRET = process.env.TELEGRAM_WEBHOOK_SECRET!
 const CHANNEL_ID = process.env.TELEGRAM_CHANNEL_ID!
-
+const ADMIN_USER_IDS = ['6479764005']
 export async function POST(req: NextRequest) {
   const incomingSecret = req.headers.get('x-telegram-bot-api-secret-token')
   if (incomingSecret !== SECRET) {
@@ -136,10 +136,11 @@ async function handleMessage(msg: any) {
   const fromId = msg.from?.id
   const text = (msg.text || '').trim()
 
-  /* Admin commands run from the leads channel only */
+  /* Admin commands run from leads channel OR direct chat with admin user */
   const isAdminChannel = String(chatId) === CHANNEL_ID
+  const isAdminUser = fromId && ADMIN_USER_IDS.includes(String(fromId))
 
-  if (isAdminChannel) {
+  if (isAdminChannel || isAdminUser) {
     await handleAdminCommand(chatId, text)
     return
   }
