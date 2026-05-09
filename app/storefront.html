@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VANTAGE 26 — FIFA World Cup Luxury Concierge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#080808;--deep:#0e0d0b;--card:#111009;
+  --gold:#c9a84c;--gold-light:#e8c96a;--gold-dim:#8a6f2e;
+  --champagne:#f5e6c8;--ivory:#f9f4eb;--muted:#6b6456;
+  --border:rgba(201,168,76,.18);--border-bright:rgba(201,168,76,.45);
+  --nav-h:72px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--black);color:var(--champagne);font-family:'Montserrat',sans-serif;font-weight:300;letter-spacing:.02em;overflow-x:hidden;}
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-track{background:var(--black);}
+::-webkit-scrollbar-thumb{background:var(--gold-dim);border-radius:2px;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.35;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 4rem;height:var(--nav-h);background:linear-gradient(to bottom,rgba(8,8,8,.95),transparent);transition:background .4s;}
+nav.scrolled{background:rgba(8,8,8,.97);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;letter-spacing:.3em;color:var(--gold-light);text-decoration:none;text-transform:uppercase;flex-shrink:0;}
+.nav-logo span{color:var(--champagne);font-style:italic;}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;transition:color .3s;}
+.nav-links a:hover{color:var(--gold-light);}
+.nav-cta{background:transparent;border:1px solid var(--border-bright);color:var(--gold-light);padding:.55rem 1.6rem;font-family:'Montserrat',sans-serif;font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;cursor:pointer;transition:all .3s;text-decoration:none;white-space:nowrap;}
+.nav-cta:hover{background:var(--gold);color:var(--black);border-color:var(--gold);}
+.nav-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;}
+.nav-burger span{display:block;width:24px;height:1px;background:var(--gold-light);transition:all .35s;}
+.nav-burger.open span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+.nav-burger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+.nav-burger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+.mobile-menu{display:none;position:fixed;inset:0;top:var(--nav-h);background:rgba(8,8,6,.97);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;opacity:0;pointer-events:none;transition:opacity .3s;}
+.mobile-menu.open{opacity:1;pointer-events:all;}
+.mobile-menu a{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--ivory);text-decoration:none;letter-spacing:.1em;transition:color .2s;}
+.mobile-menu a:hover{color:var(--gold-light);}
+.mobile-menu .mob-cta{margin-top:.5rem;font-family:'Montserrat',sans-serif;font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold-light);border:1px solid var(--border-bright);padding:.8rem 2.5rem;}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;overflow:hidden;padding-top:var(--nav-h);}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 60% 40%,rgba(201,168,76,.07) 0%,transparent 60%),radial-gradient(ellipse 50% 80% at 10% 80%,rgba(201,168,76,.04) 0%,transparent 50%),linear-gradient(160deg,#0a0900 0%,#080808 40%,#050505 100%);}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.04) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse 70% 70% at 70% 50%,black 0%,transparent 70%);}
+.hero-content{position:relative;z-index:2;padding:5rem 4rem;}
+.hero-eyebrow{display:flex;align-items:center;gap:1rem;margin-bottom:2rem;opacity:0;animation:fadeUp 1s .3s forwards;}
+.hero-eyebrow-line{width:40px;height:1px;background:var(--gold);flex-shrink:0;}
+.hero-eyebrow-text{font-size:.62rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,8vw,7rem);font-weight:300;line-height:.95;color:var(--ivory);margin-bottom:1rem;opacity:0;animation:fadeUp 1s .5s forwards;}
+.hero-title em{font-style:italic;color:var(--gold-light);font-weight:300;}
+.hero-title .block{display:block;}
+.hero-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,2.5vw,1.8rem);font-weight:300;font-style:italic;color:var(--muted);margin-bottom:3rem;opacity:0;animation:fadeUp 1s .7s forwards;}
+.hero-actions{display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap;opacity:0;animation:fadeUp 1s .9s forwards;}
+.hero-stats{position:absolute;right:4rem;bottom:6rem;z-index:2;display:flex;flex-direction:column;gap:2rem;opacity:0;animation:fadeLeft 1s 1.1s forwards;}
+.hero-stat{text-align:right;border-right:1px solid var(--border-bright);padding-right:1.5rem;}
+.hero-stat-num{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--gold-light);line-height:1;}
+.hero-stat-label{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:.2rem;}
+.hero-scroll{position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:0;animation:fadeUp 1s 1.3s forwards;}
+.hero-scroll span{font-size:.52rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);}
+.scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s ease-in-out infinite;}
+
+/* BUTTONS */
+.btn-primary{background:var(--gold);color:var(--black);border:none;padding:1rem 2.5rem;font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block;}
+.btn-primary:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 8px 30px rgba(201,168,76,.3);}
+.btn-ghost{background:transparent;color:var(--champagne);border:1px solid rgba(249,244,235,.2);padding:1rem 2.5rem;font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:400;letter-spacing:.25em;text-transform:uppercase;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block;}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold-light);}
+
+/* MARQUEE */
+.marquee-wrap{border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(201,168,76,.03);overflow:hidden;padding:.9rem 0;}
+.marquee-track{display:flex;animation:marquee 30s linear infinite;white-space:nowrap;}
+.marquee-item{display:flex;align-items:center;gap:1.5rem;padding:0 2rem;font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);flex-shrink:0;}
+.marquee-dot{width:4px;height:4px;background:var(--gold);border-radius:50%;flex-shrink:0;}
+
+/* SECTIONS */
+section{position:relative;}
+.section-inner{max-width:1400px;margin:0 auto;padding:7rem 4rem;}
+.section-eyebrow{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;}
+.section-eyebrow-line{width:30px;height:1px;background:var(--gold);flex-shrink:0;}
+.section-eyebrow-text{font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,5vw,4rem);font-weight:300;color:var(--ivory);line-height:1.1;margin-bottom:1.5rem;}
+.section-title em{font-style:italic;color:var(--gold-light);}
+.section-body{font-size:.82rem;line-height:1.9;color:var(--muted);max-width:580px;}
+
+/* TIERS */
+.tiers-section{background:var(--deep);}
+.tiers-header{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-bottom:4rem;align-items:end;}
+.tiers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+.tier-card{background:var(--card);padding:2.5rem 2rem;position:relative;overflow:hidden;cursor:pointer;transition:all .4s;}
+.tier-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:transparent;transition:background .4s;}
+.tier-card:hover::before,.tier-card.featured::before{background:var(--gold);}
+.tier-card:hover{background:#16140e;}
+.tier-card.featured{background:linear-gradient(135deg,#14120a 0%,#1a160b 100%);}
+.tier-number{font-family:'Cormorant Garamond',serif;font-size:4rem;font-weight:300;color:rgba(201,168,76,.08);position:absolute;top:1rem;right:1.5rem;line-height:1;}
+.tier-badge{display:inline-block;font-size:.52rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);border:1px solid var(--border-bright);padding:.3rem .8rem;margin-bottom:1.5rem;}
+.tier-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:400;color:var(--ivory);margin-bottom:.4rem;}
+.tier-price{font-size:.68rem;color:var(--gold);letter-spacing:.08em;margin-bottom:1.2rem;}
+.tier-desc{font-size:.75rem;line-height:1.8;color:var(--muted);margin-bottom:1.5rem;}
+.tier-features{list-style:none;display:flex;flex-direction:column;gap:.5rem;}
+.tier-features li{font-size:.7rem;color:rgba(245,230,200,.6);display:flex;align-items:flex-start;gap:.7rem;line-height:1.5;}
+.tier-features li::before{content:'—';color:var(--gold-dim);flex-shrink:0;}
+
+/* PACKAGES */
+.packages-section{background:var(--black);}
+.packages-intro{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;margin-bottom:4rem;}
+.packages-stack{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.package-row{background:var(--card);display:grid;grid-template-columns:60px 1fr auto auto;align-items:center;gap:2rem;padding:1.8rem 2.5rem;cursor:pointer;transition:all .35s;position:relative;overflow:hidden;}
+.package-row::after{content:'';position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(to right,rgba(201,168,76,.08),transparent);transition:width .4s;}
+.package-row:hover{background:#121109;}
+.package-row:hover::after{width:100%;}
+.package-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--gold-dim);position:relative;z-index:1;}
+.package-info{position:relative;z-index:1;min-width:0;}
+.package-name{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:400;color:var(--ivory);margin-bottom:.25rem;}
+.package-tagline{font-size:.68rem;color:var(--muted);}
+.package-tier{font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-dim);border:1px solid var(--border);padding:.3rem .8rem;white-space:nowrap;position:relative;z-index:1;transition:border-color .3s;}
+.package-row:hover .package-tier{border-color:var(--border-bright);}
+.package-price{text-align:right;position:relative;z-index:1;flex-shrink:0;}
+.package-price-from{font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);display:block;}
+.package-price-num{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:var(--gold-light);}
+.package-cta-row{display:flex;justify-content:center;margin-top:2.5rem;}
+
+/* VENUES */
+.stadiums-section{background:var(--deep);}
+.stadiums-header{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;margin-bottom:3.5rem;}
+.stadiums-scroll{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);}
+.stadium-card{background:var(--card);padding:1.8rem 1.4rem;cursor:pointer;transition:background .3s;}
+.stadium-card:hover{background:#141209;}
+.stadium-city{font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;}
+.stadium-name{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--ivory);margin-bottom:.25rem;}
+.stadium-detail{font-size:.65rem;color:var(--muted);margin-bottom:1rem;}
+.stadium-matches{display:flex;flex-direction:column;gap:.3rem;}
+.stadium-match-tag{display:inline-block;font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);padding:.2rem .55rem;width:fit-content;}
+.stadium-match-tag.final{border-color:rgba(201,168,76,.35);color:var(--gold);}
+
+/* SERVICES */
+.services-section{background:var(--black);}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3rem;margin-top:4rem;}
+.service-item{border-top:1px solid var(--border);padding-top:2rem;}
+.service-icon{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-style:italic;color:var(--gold-dim);margin-bottom:1.2rem;line-height:1;}
+.service-name{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:400;color:var(--ivory);margin-bottom:.7rem;}
+.service-desc{font-size:.76rem;line-height:1.9;color:var(--muted);margin-bottom:1.2rem;}
+.service-details{list-style:none;display:flex;flex-direction:column;gap:.4rem;}
+.service-details li{font-size:.68rem;color:rgba(201,168,76,.5);display:flex;align-items:flex-start;gap:.5rem;line-height:1.5;}
+.service-details li::before{content:'';width:12px;height:1px;background:var(--gold-dim);flex-shrink:0;margin-top:.55em;}
+
+/* SEATMAP */
+.seatmap-section{background:var(--black);}
+.seatmap-wrap{margin-top:4rem;display:grid;grid-template-columns:1fr 360px;gap:3rem;align-items:start;}
+.stadium-svg-wrap{background:var(--card);border:1px solid var(--border);padding:2.5rem;}
+.stadium-svg-label{text-align:center;font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem;}
+.seat-legend{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.seat-legend-item{background:var(--card);display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.1rem;cursor:pointer;transition:background .3s;}
+.seat-legend-item:hover,.seat-legend-item.active{background:#161410;}
+.seat-legend-left{display:flex;align-items:center;gap:.8rem;}
+.seat-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.seat-tier-name{font-size:.7rem;color:var(--champagne);}
+.seat-tier-price{font-family:'Cormorant Garamond',serif;font-size:.95rem;color:var(--gold);}
+.seat-info-box{background:var(--card);border:1px solid var(--border);padding:1.4rem;margin-top:1px;}
+.seat-info-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--ivory);margin-bottom:.4rem;}
+.seat-info-desc{font-size:.7rem;color:var(--muted);line-height:1.7;margin-bottom:.9rem;}
+.seat-info-includes{list-style:none;display:flex;flex-direction:column;gap:.3rem;margin-bottom:1.1rem;}
+.seat-info-includes li{font-size:.66rem;color:rgba(201,168,76,.55);display:flex;align-items:flex-start;gap:.5rem;line-height:1.5;}
+.seat-info-includes li::before{content:'';width:8px;height:1px;background:var(--gold-dim);flex-shrink:0;margin-top:.55em;}
+
+/* PAYMENT */
+.payment-section{background:var(--deep);}
+.payment-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;margin-top:4rem;}
+.coin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-bottom:2rem;}
+.coin-card{background:var(--card);padding:1.1rem;text-align:center;cursor:pointer;transition:background .3s;}
+.coin-card:hover,.coin-card.active{background:#1a160b;}
+.coin-card.active{outline:1px solid var(--gold-dim);}
+.coin-symbol{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--gold-light);display:block;margin-bottom:.15rem;}
+.coin-name{font-size:.57rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);}
+.payment-flow{background:var(--card);border:1px solid var(--border);padding:2rem;}
+.flow-header{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--ivory);margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
+.flow-step{display:flex;gap:1.2rem;padding:1.2rem 0;border-bottom:1px solid var(--border);}
+.flow-step:last-child{border-bottom:none;}
+.flow-step-num{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:var(--gold-dim);line-height:1;flex-shrink:0;width:28px;}
+.flow-step-title{font-size:.72rem;font-weight:500;color:var(--champagne);margin-bottom:.25rem;}
+.flow-step-desc{font-size:.67rem;color:var(--muted);line-height:1.7;}
+.privacy-note{margin-top:1.5rem;padding:1rem;border:1px solid rgba(201,168,76,.12);background:rgba(201,168,76,.03);}
+.privacy-note p{font-size:.66rem;color:var(--muted);line-height:1.7;}
+.privacy-note strong{color:var(--gold-dim);font-weight:500;}
+
+/* BESPOKE */
+.bespoke-section{position:relative;overflow:hidden;background:linear-gradient(135deg,#0c0b07 0%,#12100a 50%,#0a0900 100%);}
+.bespoke-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(201,168,76,.06) 0%,transparent 70%);pointer-events:none;}
+.bespoke-inner{text-align:center;padding:9rem 4rem;position:relative;z-index:1;}
+.bespoke-rule{width:60px;height:1px;background:var(--gold);margin:0 auto 2.5rem;}
+.bespoke-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.8rem,6vw,5.5rem);font-weight:300;color:var(--ivory);line-height:1.1;margin-bottom:1.5rem;}
+.bespoke-title em{font-style:italic;color:var(--gold-light);}
+.bespoke-sub{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-style:italic;color:var(--muted);max-width:480px;margin:0 auto 3rem;line-height:1.6;}
+.bespoke-actions{display:flex;gap:1.2rem;justify-content:center;align-items:center;flex-wrap:wrap;}
+
+/* FOOTER */
+footer{background:#050504;border-top:1px solid var(--border);padding:4rem;}
+.footer-inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;margin-bottom:3rem;}
+.footer-brand-name{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:300;letter-spacing:.2em;color:var(--gold-light);text-transform:uppercase;margin-bottom:.8rem;}
+.footer-brand-desc{font-size:.72rem;color:var(--muted);line-height:1.8;max-width:280px;}
+.footer-col-title{font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:1.2rem;}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
+.footer-links a{font-size:.72rem;color:var(--muted);text-decoration:none;transition:color .3s;}
+.footer-links a:hover{color:var(--champagne);}
+.footer-bottom{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;padding-top:2rem;border-top:1px solid var(--border);}
+.footer-copy{font-size:.6rem;color:rgba(107,100,86,.6);}
+.footer-coins{display:flex;gap:.8rem;flex-wrap:wrap;}
+.footer-coin{font-size:.58rem;letter-spacing:.1em;color:rgba(201,168,76,.35);border:1px solid rgba(201,168,76,.12);padding:.2rem .55rem;}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.87);z-index:2000;display:flex;align-items:flex-start;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;padding:1.5rem;overflow-y:auto;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{background:var(--deep);border:1px solid var(--border-bright);max-width:540px;width:100%;padding:2.5rem;position:relative;transform:translateY(20px);transition:transform .3s;margin:auto;}
+.modal-overlay.open .modal{transform:translateY(0);}
+.modal-close{position:absolute;top:1.2rem;right:1.2rem;background:none;border:none;color:var(--muted);font-size:1.1rem;cursor:pointer;transition:color .2s;line-height:1;padding:.4rem;}
+.modal-close:hover{color:var(--champagne);}
+.modal-eyebrow{font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.7rem;}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:var(--ivory);margin-bottom:.4rem;}
+.modal-price{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--gold);margin-bottom:1.5rem;padding-bottom:1.2rem;border-bottom:1px solid var(--border);}
+.modal-includes{list-style:none;display:flex;flex-direction:column;gap:.6rem;margin-bottom:2rem;}
+.modal-includes li{font-size:.72rem;color:var(--champagne);display:flex;align-items:flex-start;gap:.7rem;line-height:1.5;}
+.modal-includes li::before{content:'✦';color:var(--gold);font-size:.48rem;margin-top:.25rem;flex-shrink:0;}
+.modal-form{display:flex;flex-direction:column;gap:.9rem;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;}
+.form-group{display:flex;flex-direction:column;gap:.35rem;}
+.form-label{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);}
+.form-input{background:rgba(255,255,255,.03);border:1px solid var(--border);color:var(--champagne);padding:.75rem .9rem;font-family:'Montserrat',sans-serif;font-size:.78rem;outline:none;transition:border-color .3s;width:100%;}
+.form-input:focus{border-color:var(--gold-dim);}
+.form-input::placeholder{color:rgba(107,100,86,.5);}
+.form-select{background:rgba(255,255,255,.03);border:1px solid var(--border);color:var(--champagne);padding:.75rem .9rem;font-family:'Montserrat',sans-serif;font-size:.78rem;outline:none;width:100%;cursor:pointer;appearance:none;transition:border-color .3s;}
+.form-select:focus{border-color:var(--gold-dim);}
+.form-select option{background:var(--deep);}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-delay-1{transition-delay:.1s;}
+.reveal-delay-2{transition-delay:.2s;}
+.reveal-delay-3{transition-delay:.3s;}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeLeft{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes scrollPulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* ══════════════ TABLET ≤1024px ══════════════ */
+@media(max-width:1024px){
+  nav{padding:0 2rem;}
+  .nav-links{gap:1.8rem;}
+  .nav-links a{font-size:.6rem;}
+  .hero-content{padding:5rem 2.5rem;}
+  .hero-stats{right:2rem;bottom:4rem;}
+  .section-inner{padding:5rem 2.5rem;}
+  .tiers-header,.stadiums-header,.packages-intro{gap:2.5rem;}
+  .tiers-grid{grid-template-columns:repeat(2,1fr);}
+  .package-row{grid-template-columns:50px 1fr auto;gap:1.5rem;padding:1.5rem 2rem;}
+  .package-price{display:none;}
+  .stadiums-scroll{grid-template-columns:repeat(3,1fr);}
+  .services-grid{gap:2rem;}
+  .seatmap-wrap{grid-template-columns:1fr 300px;gap:2rem;}
+  .payment-grid{gap:3rem;}
+  .footer-inner{grid-template-columns:1fr 1fr;gap:2.5rem;}
+  .bespoke-inner{padding:7rem 2.5rem;}
+  footer{padding:3rem 2.5rem;}
+}
+
+/* ══════════════ TABLET PORTRAIT ≤768px ══════════════ */
+@media(max-width:768px){
+  :root{--nav-h:60px;}
+  nav{padding:0 1.5rem;}
+  .nav-links,.nav-cta{display:none;}
+  .nav-burger{display:flex;}
+  .mobile-menu{display:flex;}
+  .hero-content{padding:3.5rem 1.5rem 6rem;}
+  .hero-stats{display:none;}
+  .hero-scroll{display:none;}
+  .hero-actions{flex-direction:column;align-items:flex-start;gap:.9rem;}
+  .btn-primary,.btn-ghost{width:100%;text-align:center;padding:.9rem 1.5rem;}
+  .section-inner{padding:4rem 1.5rem;}
+  .tiers-header{grid-template-columns:1fr;gap:1.5rem;margin-bottom:2.5rem;}
+  .tiers-grid{grid-template-columns:1fr 1fr;}
+  .packages-intro{grid-template-columns:1fr;gap:1.5rem;margin-bottom:2.5rem;}
+  .package-row{grid-template-columns:40px 1fr;gap:1rem;padding:1.3rem 1.2rem;}
+  .package-tier,.package-price{display:none;}
+  .package-name{font-size:1.1rem;}
+  .package-tagline{font-size:.62rem;}
+  .stadiums-header{grid-template-columns:1fr;gap:1.5rem;margin-bottom:2.5rem;}
+  .stadiums-scroll{grid-template-columns:repeat(2,1fr);}
+  .services-grid{grid-template-columns:1fr;gap:0;margin-top:2.5rem;}
+  .service-item{padding-top:1.8rem;padding-bottom:1.8rem;border-bottom:1px solid var(--border);}
+  .service-item+.service-item{border-top:none;}
+  .seatmap-wrap{grid-template-columns:1fr;gap:2rem;}
+  .payment-grid{grid-template-columns:1fr;gap:2.5rem;}
+  .bespoke-inner{padding:5rem 1.5rem;}
+  .bespoke-actions{flex-direction:column;align-items:center;}
+  .bespoke-actions .btn-primary,.bespoke-actions .btn-ghost{width:100%;max-width:320px;text-align:center;}
+  .footer-inner{grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:2rem;}
+  footer{padding:2.5rem 1.5rem;}
+  .footer-bottom{flex-direction:column;align-items:flex-start;}
+  .modal-overlay{padding:1rem;}
+  .modal{padding:2rem 1.5rem;}
+  .form-row{grid-template-columns:1fr;}
+}
+
+/* ══════════════ MOBILE ≤480px ══════════════ */
+@media(max-width:480px){
+  :root{--nav-h:56px;}
+  .nav-logo{font-size:1.1rem;letter-spacing:.2em;}
+  .hero-content{padding:3rem 1.2rem 5rem;}
+  .hero-eyebrow-text{font-size:.54rem;letter-spacing:.2em;}
+  .section-inner{padding:3.5rem 1.2rem;}
+  .tiers-grid{grid-template-columns:1fr;}
+  .tier-card{padding:2rem 1.5rem;}
+  .package-row{padding:1.1rem 1rem;}
+  .package-num{font-size:1.5rem;width:30px;}
+  .stadiums-scroll{grid-template-columns:1fr;}
+  .service-details{display:none;}
+  .seatmap-wrap{gap:1.5rem;}
+  .seat-legend-item{padding:.75rem 1rem;}
+  .coin-grid{grid-template-columns:repeat(2,1fr);}
+  .bespoke-inner{padding:4rem 1.2rem;}
+  .bespoke-sub{font-size:1.05rem;}
+  .footer-inner{grid-template-columns:1fr;}
+  footer{padding:2rem 1.2rem;}
+  .modal-overlay{padding:.6rem;}
+  .modal{padding:1.8rem 1.2rem;}
+  .modal-title{font-size:1.5rem;}
+  .marquee-track{animation-duration:20s;}
+  .bespoke-actions .btn-primary,.bespoke-actions .btn-ghost{max-width:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Vantage <span>26</span></a>
+  <ul class="nav-links">
+    <li><a href="#hospitality">Hospitality</a></li>
+    <li><a href="#packages">Packages</a></li>
+    <li><a href="#venues">Venues</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#payment">Payment</a></li>
+  </ul>
+  <a href="#bespoke" class="nav-cta">Enquire</a>
+  <button class="nav-burger" id="burger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#hospitality" onclick="closeMobileMenu()">Hospitality</a>
+  <a href="#packages"    onclick="closeMobileMenu()">Packages</a>
+  <a href="#venues"      onclick="closeMobileMenu()">Venues</a>
+  <a href="#services"    onclick="closeMobileMenu()">Services</a>
+  <a href="#payment"     onclick="closeMobileMenu()">Payment</a>
+  <a href="#bespoke" class="mob-cta" onclick="closeMobileMenu()">Enquire Now</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-line"></div>
+      <span class="hero-eyebrow-text">FIFA World Cup 2026 · Private Concierge</span>
+    </div>
+    <h1 class="hero-title">
+      <span class="block">The World's</span>
+      <span class="block"><em>Greatest Match.</em></span>
+      <span class="block">Your Private Stage.</span>
+    </h1>
+    <p class="hero-subtitle">Hospitality beyond the stadium. Curated for the few.</p>
+    <div class="hero-actions">
+      <a href="#packages" class="btn-primary">View Packages</a>
+      <a href="#bespoke"  class="btn-ghost">Bespoke Enquiry</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hero-stat-num">104</div><div class="hero-stat-label">Matches</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">16</div><div class="hero-stat-label">Host Cities</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">48</div><div class="hero-stat-label">Nations</div></div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div><span>Discover</span></div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item"><span class="marquee-dot"></span>New York · Final July 19</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Private Suites from $43,200</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Rolls-Royce Transfers</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Pitchside Lounge Access</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Private Jet Charter</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>16 Host Stadiums</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>BTC · ETH · XRP · DOGE · LTC · BCH</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Opening Match Mexico City</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Coldplay at the Final</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>24/7 Concierge Service</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>New York · Final July 19</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Private Suites from $43,200</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Rolls-Royce Transfers</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Pitchside Lounge Access</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Private Jet Charter</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>16 Host Stadiums</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>BTC · ETH · XRP · DOGE · LTC · BCH</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Opening Match Mexico City</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Coldplay at the Final</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>24/7 Concierge Service</div>
+  </div>
+</div>
+
+<!-- HOSPITALITY TIERS -->
+<section class="tiers-section" id="hospitality">
+  <div class="section-inner">
+    <div class="tiers-header reveal">
+      <div>
+        <div class="section-eyebrow"><div class="section-eyebrow-line"></div><span class="section-eyebrow-text">Official Hospitality</span></div>
+        <h2 class="section-title">Six Tiers of<br><em>Excellence</em></h2>
+      </div>
+      <p class="section-body">Every hospitality package guarantees your seat — no lottery, no uncertainty. From the FIFA Pavilion to private on-pitch suites, we secure the tier that matches your expectations.</p>
+    </div>
+    <div class="tiers-grid">
+      <div class="tier-card reveal reveal-delay-1">
+        <div class="tier-number">I</div><div class="tier-badge">Entry</div>
+        <div class="tier-name">FIFA Pavilion</div><div class="tier-price">From $1,300 per match</div>
+        <div class="tier-desc">The official entry into guaranteed World Cup hospitality. Preferred seating with complimentary food, beverages, and dedicated lounge access.</div>
+        <ul class="tier-features"><li>Preferred category seating</li><li>Complimentary food & beverages</li><li>Dedicated hospitality lounge</li><li>Venue series from $8,275/person</li></ul>
+      </div>
+      <div class="tier-card reveal reveal-delay-2">
+        <div class="tier-number">II</div><div class="tier-badge">Premium</div>
+        <div class="tier-name">Champions Club</div><div class="tier-price">From $2,000 per match</div>
+        <div class="tier-desc">Premium sideline seats paired with chef-driven menus and sommelier-guided beverage service throughout the match day.</div>
+        <ul class="tier-features"><li>Premium sideline seating</li><li>Chef-driven themed menus</li><li>Sommelier beverage service</li><li>Pre, halftime & post-match service</li></ul>
+      </div>
+      <div class="tier-card reveal reveal-delay-3">
+        <div class="tier-number">III</div><div class="tier-badge">Elite</div>
+        <div class="tier-name">VIP Lounge</div><div class="tier-price">From $3,000 per match</div>
+        <div class="tier-desc">Enhanced views from elevated sideline positions with dedicated guest relations and locally inspired fine dining experiences.</div>
+        <ul class="tier-features"><li>Enhanced sideline seat views</li><li>Local chef signature menus</li><li>Dedicated guest relations host</li><li>Private lounge access</li></ul>
+      </div>
+      <div class="tier-card featured reveal reveal-delay-1">
+        <div class="tier-number">IV</div><div class="tier-badge">Prestige</div>
+        <div class="tier-name">Pitchside Lounge</div><div class="tier-price">From $6,000/match · Series to $73,200</div>
+        <div class="tier-desc">The closest seats to the action in hospitality. Live-action cooking stations, premium beverages, and unobstructed pitchside views across all match stages.</div>
+        <ul class="tier-features"><li>Pitchside sideline seating</li><li>Live-action cooking stations</li><li>Premium beverage service</li><li>New York/NJ Final series available</li></ul>
+      </div>
+      <div class="tier-card reveal reveal-delay-2">
+        <div class="tier-number">V</div><div class="tier-badge">Exclusive</div>
+        <div class="tier-name">Private Suite</div><div class="tier-price">From $43,200 per match</div>
+        <div class="tier-desc">A fully private suite for 6–12 guests. Complete privacy, bespoke catering, and a personal host dedicated to your group throughout.</div>
+        <ul class="tier-features"><li>6–12 guest private suite</li><li>Bespoke catering & bar service</li><li>Personal dedicated host</li><li>Full tournament box from $100,000</li></ul>
+      </div>
+      <div class="tier-card reveal reveal-delay-3">
+        <div class="tier-number">VI</div><div class="tier-badge">Ultra</div>
+        <div class="tier-name">Platinum Access</div><div class="tier-price">Bespoke — by enquiry only</div>
+        <div class="tier-desc">The absolute pinnacle. Full customisation, the most sought-after seats, meet-and-greets with football legends, and behind-the-scenes experiences.</div>
+        <ul class="tier-features"><li>Most premium seats & suites</li><li>Meet football legends & FIFA ambassadors</li><li>Behind-the-scenes stadium tours</li><li>On-pitch photo experiences</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section class="packages-section" id="packages">
+  <div class="section-inner">
+    <div class="packages-intro reveal">
+      <div>
+        <div class="section-eyebrow"><div class="section-eyebrow-line"></div><span class="section-eyebrow-text">Curated Experiences</span></div>
+        <h2 class="section-title">Five Journeys.<br><em>One Tournament.</em></h2>
+      </div>
+      <p class="section-body">Each package is a complete, end-to-end experience — hospitality, private aviation, ground transfers, hotels, and concierge — assembled so you experience nothing but the game.</p>
+    </div>
+    <div class="packages-stack reveal">
+      <div class="package-row" onclick="openModal('matchday')">
+        <div class="package-num">01</div>
+        <div class="package-info"><div class="package-name">The Matchday Experience</div><div class="package-tagline">Single match · FIFA Pavilion · Rolls-Royce transfer · Welcome gift</div></div>
+        <div class="package-tier">FIFA Pavilion</div>
+        <div class="package-price"><span class="package-price-from">From</span><span class="package-price-num">$2,500</span></div>
+      </div>
+      <div class="package-row" onclick="openModal('vip')">
+        <div class="package-num">02</div>
+        <div class="package-info"><div class="package-name">The VIP Weekend</div><div class="package-tagline">Two matches · VIP Lounge · Private jet city hop · Rolls-Royce · Hotel · 24/7 concierge</div></div>
+        <div class="package-tier">VIP Lounge</div>
+        <div class="package-price"><span class="package-price-from">From</span><span class="package-price-num">$12,000</span></div>
+      </div>
+      <div class="package-row" onclick="openModal('champions')">
+        <div class="package-num">03</div>
+        <div class="package-info"><div class="package-name">The Champions Journey</div><div class="package-tagline">Four matches · Pitchside Lounge · Private jet + inter-city hops · 5 nights luxury hotel</div></div>
+        <div class="package-tier">Pitchside</div>
+        <div class="package-price"><span class="package-price-from">From</span><span class="package-price-num">$35,000</span></div>
+      </div>
+      <div class="package-row" onclick="openModal('final')">
+        <div class="package-num">04</div>
+        <div class="package-info"><div class="package-name">The Final Experience</div><div class="package-tagline">8 matches + Final · Private Suite · International jet · Manhattan 5-star · Full concierge</div></div>
+        <div class="package-tier">Private Suite</div>
+        <div class="package-price"><span class="package-price-from">From</span><span class="package-price-num">$85,000</span></div>
+      </div>
+      <div class="package-row" onclick="openModal('platinum')">
+        <div class="package-num">05</div>
+        <div class="package-info"><div class="package-name">The Platinum Tour</div><div class="package-tagline">Full tournament · Platinum Access · Ultra-long-range jet on standby · Aman / Four Seasons every city</div></div>
+        <div class="package-tier">Platinum</div>
+        <div class="package-price"><span class="package-price-from">Bespoke from</span><span class="package-price-num">$250,000</span></div>
+      </div>
+    </div>
+    <div class="package-cta-row reveal"><a href="#bespoke" class="btn-primary">Request Custom Package</a></div>
+  </div>
+</section>
+
+<!-- VENUES -->
+<section class="stadiums-section" id="venues">
+  <div class="section-inner">
+    <div class="stadiums-header reveal">
+      <div>
+        <div class="section-eyebrow"><div class="section-eyebrow-line"></div><span class="section-eyebrow-text">16 Host Venues</span></div>
+        <h2 class="section-title">Three Nations.<br><em>One Stage.</em></h2>
+      </div>
+      <p class="section-body">From the opening whistle at Estadio Azteca in Mexico City to the Final at MetLife Stadium in New York — 104 matches across 16 iconic venues. We are present at all of them.</p>
+    </div>
+    <div class="stadiums-scroll reveal">
+      <div class="stadium-card"><div class="stadium-city">New York / New Jersey</div><div class="stadium-name">MetLife Stadium</div><div class="stadium-detail">Cap. 82,500 · Eastern Region</div><div class="stadium-matches"><span class="stadium-match-tag final">THE FINAL · July 19</span><span class="stadium-match-tag final">Semi-Final</span><span class="stadium-match-tag">Quarter-Final</span><span class="stadium-match-tag">8 Matches Total</span></div></div>
+      <div class="stadium-card"><div class="stadium-city">Dallas</div><div class="stadium-name">AT&T Stadium</div><div class="stadium-detail">Cap. 80,000–105,000 · Central</div><div class="stadium-matches"><span class="stadium-match-tag final">Semi-Final</span><span class="stadium-match-tag">Group Stage</span><span class="stadium-match-tag">Knockout Rounds</span></div></div>
+      <div class="stadium-card"><div class="stadium-city">Atlanta</div><div class="stadium-name">Mercedes-Benz Stadium</div><div class="stadium-detail">Cap. 75,000 · Eastern Region</div><div class="stadium-matches"><span class="stadium-match-tag final">Semi-Final</span><span class="stadium-match-tag">Group Stage</span><span class="stadium-match-tag">Knockout Rounds</span></div></div>
+      <div class="stadium-card"><div class="stadium-city">Los Angeles</div><div class="stadium-name">SoFi Stadium</div><div class="stadium-detail">Cap. 70,000 · Western Region</div><div class="stadium-matches"><span class="stadium-match-tag final">Quarter-Final</span><span class="stadium-match-tag">8 Matches Total</span><span class="stadium-match-tag">Group Stage</span></div></div>
+      <div class="stadium-card"><div class="stadium-city">Boston</div><div class="stadium-name">Gillette Stadium</div><div class="stadium-detail">Cap. 65,000 · Eastern Region</div><div class="stadium-matches"><span class="stadium-match-tag final">Quarter-Final</span><span class="stadium-match-tag">7 Matches Total</span><span class="stadium-match-tag">Group Stage</span></div></div>
+      <div class="stadium-card"><div class="stadium-city">Mexico City</div><div class="stadium-name">Estadio Azteca</div><div class="stadium-detail">Cap. 87,000 · Central Region</div><div class="stadium-matches"><span class="stadium-match-tag final">Opening Match</span><span class="stadium-match-tag">June 11, 2026</span><span class="stadium-match-tag">Group Stage</span></div></div>
+      <div class="stadium-card"><div class="stadium-city">Miami</div><div class="stadium-name">Hard Rock Stadium</div><div class="stadium-detail">Cap. 65,000 · Eastern Region</div><div class="stadium-matches"><span class="stadium-match-tag">Knockout Rounds</span><span class="stadium-match-tag">Group Stage</span></div></div>
+      <div class="stadium-card"><div class="stadium-city">Houston</div><div class="stadium-name">NRG Stadium</div><div class="stadium-detail">Cap. 72,000 · Central Region</div><div class="stadium-matches"><span class="stadium-match-tag">Group + KO Stage</span><span class="stadium-match-tag">July 4 Ceremony</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-section" id="services">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-eyebrow"><div class="section-eyebrow-line"></div><span class="section-eyebrow-text">What We Provide</span></div>
+      <h2 class="section-title">Every Detail.<br><em>Handled.</em></h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-item reveal reveal-delay-1">
+        <div class="service-icon">✈</div>
+        <div class="service-name">Private Aviation</div>
+        <div class="service-desc">Intercontinental arrivals to match-day city hops. We coordinate private jets and helicopters across all 16 host cities with flexible scheduling and FBO access.</div>
+        <ul class="service-details"><li>Light, midsize & ultra-long-range jets</li><li>Helicopter stadium transfers</li><li>FBO luxury terminal access at all host cities</li><li>Private customs & immigration (CIQ)</li><li>Bespoke onboard catering & champagne</li><li>24/7 flight planning & changes</li></ul>
+      </div>
+      <div class="service-item reveal reveal-delay-2">
+        <div class="service-icon">◈</div>
+        <div class="service-name">Rolls-Royce Fleet</div>
+        <div class="service-desc">A curated fleet of Rolls-Royce Phantoms, Cullinans, and Ghosts available across all host cities. From FBO arrivals to post-match escapes — always on time, always discreet.</div>
+        <ul class="service-details"><li>Rolls-Royce Phantom, Cullinan & Ghost</li><li>Mercedes-Benz S-Class for larger groups</li><li>VIP Sprinters for groups up to 12</li><li>Pre-planned match day routes</li><li>Post-match staged pickup at VIP exit</li><li>NDA-signed uniformed chauffeurs</li></ul>
+      </div>
+      <div class="service-item reveal reveal-delay-3">
+        <div class="service-icon">◇</div>
+        <div class="service-name">Concierge & Discretion</div>
+        <div class="service-desc">A 24/7 dedicated concierge manages every detail before, during, and after the tournament. Complete discretion guaranteed across all staff and partner vendors.</div>
+        <ul class="service-details"><li>24/7 WhatsApp & direct phone line</li><li>Five-star hotel reservations (Aman, Ritz, Four Seasons)</li><li>Michelin restaurant & chef's table bookings</li><li>Private security arrangements</li><li>In-suite doctor & wellness services</li><li>NDA for all staff — no media, no disclosure</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEAT MAP -->
+<section class="seatmap-section" id="seatmap">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-eyebrow"><div class="section-eyebrow-line"></div><span class="section-eyebrow-text">Interactive Selection</span></div>
+      <h2 class="section-title">Choose Your <em>Position</em></h2>
+      <p class="section-body" style="margin-bottom:0">Select a hospitality zone to see exactly what is included. Each tier offers a fundamentally different experience of the same match.</p>
+    </div>
+    <div class="seatmap-wrap reveal">
+      <div class="stadium-svg-wrap">
+        <div class="stadium-svg-label">MetLife Stadium — World Cup Final Venue</div>
+        <svg viewBox="0 0 600 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">
+          <defs><radialGradient id="pitchGrad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#1a2e0e"/><stop offset="100%" stop-color="#0e1a08"/></radialGradient></defs>
+          <ellipse cx="300" cy="190" rx="280" ry="175" fill="#0d0c09" stroke="#2a2518" stroke-width="1"/>
+          <ellipse cx="300" cy="190" rx="270" ry="167" fill="none" stroke="#1a1a1a" stroke-width="18" style="cursor:pointer" onclick="selectZone('platinum')"/>
+          <ellipse cx="300" cy="190" rx="248" ry="153" fill="none" stroke="#1c1a12" stroke-width="14" style="cursor:pointer" onclick="selectZone('suite')"/>
+          <ellipse cx="300" cy="190" rx="228" ry="140" fill="none" stroke="#181610" stroke-width="14" style="cursor:pointer" onclick="selectZone('vip')"/>
+          <ellipse cx="300" cy="190" rx="208" ry="126" fill="none" stroke="#141209" stroke-width="12" style="cursor:pointer" onclick="selectZone('champions')"/>
+          <ellipse cx="300" cy="190" rx="188" ry="112" fill="none" stroke="#12100a" stroke-width="12" style="cursor:pointer" onclick="selectZone('pitchside')"/>
+          <ellipse cx="300" cy="190" rx="168" ry="98"  fill="none" stroke="#101009" stroke-width="10" style="cursor:pointer" onclick="selectZone('pavilion')"/>
+          <ellipse cx="300" cy="190" rx="148" ry="86"  fill="url(#pitchGrad)" stroke="#1e2e12" stroke-width="1"/>
+          <ellipse cx="300" cy="190" rx="80"  ry="46"  fill="none" stroke="#1e2e12" stroke-width="0.8"/>
+          <line x1="300" y1="104" x2="300" y2="276" stroke="#1e2e12" stroke-width="0.8"/>
+          <circle cx="300" cy="190" r="4" fill="#1e2e12"/>
+          <text x="300" y="196" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="11" fill="rgba(201,168,76,0.25)" letter-spacing="3">PITCH</text>
+          <text x="300" y="108" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="7" fill="rgba(201,168,76,0.5)"  letter-spacing="2">PITCHSIDE</text>
+          <text x="300" y="94"  text-anchor="middle" font-family="Montserrat,sans-serif" font-size="7" fill="rgba(201,168,76,0.4)"  letter-spacing="2">PAVILION</text>
+          <text x="300" y="79"  text-anchor="middle" font-family="Montserrat,sans-serif" font-size="7" fill="rgba(201,168,76,0.4)"  letter-spacing="2">CHAMPIONS</text>
+          <text x="300" y="64"  text-anchor="middle" font-family="Montserrat,sans-serif" font-size="7" fill="rgba(201,168,76,0.45)" letter-spacing="2">VIP</text>
+          <text x="300" y="50"  text-anchor="middle" font-family="Montserrat,sans-serif" font-size="7" fill="rgba(201,168,76,0.35)" letter-spacing="2">SUITES</text>
+          <text x="300" y="35"  text-anchor="middle" font-family="Montserrat,sans-serif" font-size="7" fill="rgba(201,168,76,0.3)"  letter-spacing="2">PLATINUM</text>
+        </svg>
+      </div>
+      <div>
+        <div class="seat-legend">
+          <div class="seat-legend-item active" onclick="selectZone('pitchside')"><div class="seat-legend-left"><div class="seat-dot" style="background:#c9a84c"></div><span class="seat-tier-name">Pitchside Lounge</span></div><span class="seat-tier-price">From $6,000</span></div>
+          <div class="seat-legend-item" onclick="selectZone('pavilion')"><div class="seat-legend-left"><div class="seat-dot" style="background:#8a6f2e"></div><span class="seat-tier-name">FIFA Pavilion</span></div><span class="seat-tier-price">From $1,300</span></div>
+          <div class="seat-legend-item" onclick="selectZone('champions')"><div class="seat-legend-left"><div class="seat-dot" style="background:#b8975a"></div><span class="seat-tier-name">Champions Club</span></div><span class="seat-tier-price">From $2,000</span></div>
+          <div class="seat-legend-item" onclick="selectZone('vip')"><div class="seat-legend-left"><div class="seat-dot" style="background:#6b8fc4"></div><span class="seat-tier-name">VIP Lounge</span></div><span class="seat-tier-price">From $3,000</span></div>
+          <div class="seat-legend-item" onclick="selectZone('suite')"><div class="seat-legend-left"><div class="seat-dot" style="background:#e8c96a"></div><span class="seat-tier-name">Private Suite</span></div><span class="seat-tier-price">From $43,200</span></div>
+          <div class="seat-legend-item" onclick="selectZone('platinum')"><div class="seat-legend-left"><div class="seat-dot" style="background:#f5f0e8"></div><span class="seat-tier-name">Platinum Access</span></div><span class="seat-tier-price">By enquiry</span></div>
+        </div>
+        <div class="seat-info-box">
+          <div class="seat-info-title" id="zoneTitle">Pitchside Lounge</div>
+          <div class="seat-info-desc" id="zoneDesc">The closest hospitality seats to the pitch. Premium sideline positions with unobstructed views and the most immersive match-day experience in the stadium.</div>
+          <ul class="seat-info-includes" id="zoneIncludes">
+            <li>Premium pitchside sideline seats</li><li>Live-action cooking stations</li><li>Sommelier-curated beverage service</li><li>Pre-match, halftime & post-match access</li>
+          </ul>
+          <a href="#bespoke" class="btn-primary" style="font-size:.58rem;padding:.65rem 1.4rem">Enquire for This Zone</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAYMENT -->
+<section class="payment-section" id="payment">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-eyebrow"><div class="section-eyebrow-line"></div><span class="section-eyebrow-text">Secure Payment</span></div>
+      <h2 class="section-title">Pay With<br><em>Discretion</em></h2>
+    </div>
+    <div class="payment-grid">
+      <div class="payment-info reveal">
+        <p class="section-body" style="margin-bottom:2rem">We accept six major cryptocurrencies paid directly to our wallets — no intermediaries, no payment processors. Your transaction is private, instant, and permanent.</p>
+        <div class="coin-grid">
+          <div class="coin-card active" onclick="selectCoin(this)"><span class="coin-symbol">₿</span><span class="coin-name">Bitcoin</span></div>
+          <div class="coin-card" onclick="selectCoin(this)"><span class="coin-symbol">Ξ</span><span class="coin-name">Ethereum</span></div>
+          <div class="coin-card" onclick="selectCoin(this)"><span class="coin-symbol">✕</span><span class="coin-name">XRP</span></div>
+          <div class="coin-card" onclick="selectCoin(this)"><span class="coin-symbol">Ð</span><span class="coin-name">Dogecoin</span></div>
+          <div class="coin-card" onclick="selectCoin(this)"><span class="coin-symbol">Ł</span><span class="coin-name">Litecoin</span></div>
+          <div class="coin-card" onclick="selectCoin(this)"><span class="coin-symbol">₡</span><span class="coin-name">Bitcoin Cash</span></div>
+        </div>
+        <div class="privacy-note"><p><strong>Zero platform fees.</strong> You pay only the standard network miner fee. Your fiat equivalent is locked at the rate shown for 20 minutes. Once confirmed on-chain, your order is processed immediately.</p></div>
+      </div>
+      <div class="payment-flow reveal reveal-delay-2">
+        <div class="flow-header">How the checkout works</div>
+        <div class="flow-step"><div class="flow-step-num">1</div><div><div class="flow-step-title">Select your package & seat zone</div><div class="flow-step-desc">Browse packages and choose your hospitality tier from the interactive stadium map. Fiat price shown throughout.</div></div></div>
+        <div class="flow-step"><div class="flow-step-num">2</div><div><div class="flow-step-title">Choose your coin</div><div class="flow-step-desc">Select from BTC, ETH, XRP, DOGE, LTC, or BCH. Fiat and coin equivalent displayed side by side with a 20-minute rate lock.</div></div></div>
+        <div class="flow-step"><div class="flow-step-num">3</div><div><div class="flow-step-title">Scan QR or copy address</div><div class="flow-step-desc">A large QR code and one-tap copy address provided. On mobile, a deep link opens your wallet app directly.</div></div></div>
+        <div class="flow-step"><div class="flow-step-num">4</div><div><div class="flow-step-title">Submit your TX ID</div><div class="flow-step-desc">Paste your transaction hash before the 20-minute timer expires. This is your proof of payment.</div></div></div>
+        <div class="flow-step"><div class="flow-step-num">5</div><div><div class="flow-step-title">Confirmation & fulfilment</div><div class="flow-step-desc">We verify on-chain and confirm your booking within minutes. Your concierge contacts you to begin onboarding.</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BESPOKE -->
+<section class="bespoke-section" id="bespoke">
+  <div class="bespoke-inner reveal">
+    <div class="bespoke-rule"></div>
+    <h2 class="bespoke-title">Nothing Is<br><em>Off the Table</em></h2>
+    <p class="bespoke-sub">If what you need isn't in our catalogue, we build it. Tell us your vision for the tournament and we will make it happen.</p>
+    <div class="bespoke-actions">
+      <button class="btn-primary" onclick="openModal('bespoke')">Begin Your Enquiry</button>
+      <a href="#packages" class="btn-ghost">View All Packages</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand-name">Vantage 26</div>
+      <p class="footer-brand-desc">Private concierge for the FIFA World Cup 2026. Hospitality, aviation, ground transfers, and discrete services for discerning clients across 16 host cities.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Experience</div>
+      <ul class="footer-links"><li><a href="#hospitality">Hospitality Tiers</a></li><li><a href="#packages">Packages</a></li><li><a href="#venues">Venues</a></li><li><a href="#seatmap">Seat Selection</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links"><li><a href="#services">Private Aviation</a></li><li><a href="#services">Rolls-Royce Fleet</a></li><li><a href="#services">Concierge</a></li><li><a href="#services">Discretion</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-links"><li><a href="#bespoke">Bespoke Enquiry</a></li><li><a href="#payment">Payment Info</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li></ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 Vantage 26. All rights reserved. Not affiliated with FIFA or On Location.</p>
+    <div class="footer-coins">
+      <span class="footer-coin">BTC</span><span class="footer-coin">ETH</span><span class="footer-coin">XRP</span><span class="footer-coin">DOGE</span><span class="footer-coin">LTC</span><span class="footer-coin">BCH</span>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modalBox">
+    <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+/* nav scroll */
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>navbar.classList.toggle('scrolled',scrollY>60));
+
+/* mobile menu */
+const burger=document.getElementById('burger');
+const mobileMenu=document.getElementById('mobileMenu');
+burger.addEventListener('click',()=>{
+  const open=burger.classList.toggle('open');
+  mobileMenu.classList.toggle('open',open);
+  document.body.style.overflow=open?'hidden':'';
+});
+function closeMobileMenu(){
+  burger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+  document.body.style.overflow='';
+}
+
+/* reveal */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* seat zones */
+const zones={
+  pitchside:{name:'Pitchside Lounge',desc:'The closest hospitality seats to the pitch. Premium sideline positions with unobstructed views and the most immersive match-day experience in the stadium.',includes:['Premium pitchside sideline seats','Live-action cooking stations','Sommelier-curated beverage service','Pre-match, halftime & post-match access']},
+  pavilion:{name:'FIFA Pavilion',desc:'Entry-level official hospitality with guaranteed seats, complimentary food and beverages, and access to the official hospitality lounge areas.',includes:['Preferred category seating','Complimentary food & beverages','Dedicated hospitality lounge','Official commemorative gift']},
+  champions:{name:'Champions Club',desc:'Premium sideline seating paired with chef-driven cuisine and sommelier-guided beverage service throughout the entire match day experience.',includes:['Premium sideline seating','Themed chef-driven menus','Sommelier beverage service','Pre, halftime & post-match']},
+  vip:{name:'VIP Lounge',desc:'Enhanced sideline views with dedicated guest relations staff, locally inspired fine dining, and a refined hospitality environment.',includes:['Enhanced sideline seat views','Local chef signature menus','Dedicated guest relations host','Private lounge access']},
+  suite:{name:'Private Suite',desc:'A fully private enclosed suite for 6–12 guests. Your own world within the stadium — bespoke catering, private bar, and a personal host for your group.',includes:['6–12 guest private suite','Fully bespoke catering & bar','Personal dedicated host','Total privacy & exclusivity']},
+  platinum:{name:'Platinum Access',desc:'The absolute pinnacle of hospitality. Full customisation, the most premium seats and suites, meet-and-greets with legends, and behind-the-scenes experiences.',includes:['Most premium seats & suites','Meet football legends & FIFA ambassadors','Behind-the-scenes stadium tours','On-pitch photo experiences']}
+};
+const zoneMap={pitchside:0,pavilion:1,champions:2,vip:3,suite:4,platinum:5};
+function selectZone(id){
+  const z=zones[id];if(!z)return;
+  document.querySelectorAll('.seat-legend-item').forEach(el=>el.classList.remove('active'));
+  const items=document.querySelectorAll('.seat-legend-item');
+  if(items[zoneMap[id]])items[zoneMap[id]].classList.add('active');
+  document.getElementById('zoneTitle').textContent=z.name;
+  document.getElementById('zoneDesc').textContent=z.desc;
+  document.getElementById('zoneIncludes').innerHTML=z.includes.map(i=>`<li>${i}</li>`).join('');
+}
+
+/* coin select */
+function selectCoin(el){
+  document.querySelectorAll('.coin-card').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+/* modal data */
+const packages={
+  matchday:{eyebrow:'Package 01',title:'The Matchday Experience',price:'From $2,500 per person',includes:['Single match ticket — FIFA Pavilion hospitality','Guaranteed entry — no lottery','Rolls-Royce hotel-to-stadium transfer & return','Complimentary food and beverages at the lounge','Official FIFA World Cup 2026 welcome gift','24/7 concierge support on match day']},
+  vip:{eyebrow:'Package 02',title:'The VIP Weekend',price:'From $12,000 per person',includes:['Two matches — VIP Lounge hospitality at both','Private jet city hop between venues','Rolls-Royce fleet for the full duration','Five-star hotel reservation (1–2 nights)','Pre-match restaurant reservation','24/7 dedicated concierge contact']},
+  champions:{eyebrow:'Package 03',title:'The Champions Journey',price:'From $35,000 per person',includes:['Four-match series — Pitchside Lounge at every match','Private jet from your origin city','Inter-city private jet hops between venues','Rolls-Royce fleet at every destination','Five-star hotel (5 nights)','Michelin restaurant reservations nightly','Official memorabilia package']},
+  final:{eyebrow:'Package 04',title:'The Final Experience',price:'From $85,000 per person',includes:['New York/NJ Venue Series — 8 matches including the Final','Pitchside Lounge or Private Suite','Private jet from any international origin','Rolls-Royce Phantom fleet throughout','Manhattan five-star hotel — 8 nights','Full concierge from arrival to departure','Exclusive post-Final private dinner']},
+  platinum:{eyebrow:'Package 05 — Ultra Bespoke',title:'The Platinum Tour',price:'From $250,000 per person — fully custom',includes:['Full tournament follow — group stage through the Final','Platinum Access hospitality across all legs','Ultra-long-range private jet on standby throughout','Rolls-Royce fleet at every host city','Aman or Four Seasons at every destination','Dedicated personal concierge & security detail','On-pitch photo experience','Meet-and-greet with football legends']},
+  bespoke:{eyebrow:'Private Enquiry',title:'Bespoke Commission',price:'Fully custom — no limits',includes:['Tell us what you want and we build it','Any combination of matches, venues, and services','Corporate groups and multi-guest arrangements welcome','All six cryptocurrencies accepted','Complete discretion guaranteed']}
+};
+
+/* ── Backend endpoint — your Next.js API route ── */
+const LEAD_ENDPOINT = '/api/leads';
+
+let currentPackageTitle = '';
+
+function openModal(id){
+  const pkg=packages[id];if(!pkg)return;
+  currentPackageTitle = pkg.title;
+  document.getElementById('modalContent').innerHTML=`
+    <div class="modal-eyebrow">${pkg.eyebrow}</div>
+    <div class="modal-title">${pkg.title}</div>
+    <div class="modal-price">${pkg.price}</div>
+    <ul class="modal-includes">${pkg.includes.map(i=>`<li>${i}</li>`).join('')}</ul>
+    <div class="modal-form">
+      <div id="form-error" style="display:none;font-size:.68rem;color:#e07070;padding:.6rem .8rem;border:1px solid rgba(224,112,112,.3);background:rgba(224,112,112,.06);margin-bottom:.5rem;"></div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Full Name <span style="color:var(--gold)">*</span></label>
+          <input type="text" id="enq-name" class="form-input" placeholder="Your full name" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address <span style="color:var(--gold)">*</span></label>
+          <input type="email" id="enq-email" class="form-input" placeholder="your@email.com" autocomplete="email">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone / WhatsApp</label>
+        <input type="tel" id="enq-phone" class="form-input" placeholder="+1 234 567 8900" autocomplete="tel">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Preferred Crypto Payment</label>
+        <select id="enq-coin" class="form-select">
+          <option value="">Select a coin</option>
+          <option>Bitcoin (BTC)</option>
+          <option>Ethereum (ETH)</option>
+          <option>XRP</option>
+          <option>Dogecoin (DOGE)</option>
+          <option>Litecoin (LTC)</option>
+          <option>Bitcoin Cash (BCH)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Special Requirements</label>
+        <input type="text" id="enq-notes" class="form-input" placeholder="Dietary needs, group size, specific matches…">
+      </div>
+      <button class="btn-primary" id="enq-submit" style="width:100%;margin-top:.3rem" onclick="submitEnquiry()">Submit Enquiry</button>
+    </div>`;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+  setTimeout(()=>{ const n=document.getElementById('enq-name'); if(n) n.focus(); },100);
+}
+
+function closeModal(e){if(e.target===document.getElementById('modalOverlay'))closeModalDirect();}
+function closeModalDirect(){document.getElementById('modalOverlay').classList.remove('open');document.body.style.overflow='';}
+
+async function submitEnquiry(){
+  const name  = (document.getElementById('enq-name')?.value  || '').trim();
+  const email = (document.getElementById('enq-email')?.value || '').trim();
+  const phone = (document.getElementById('enq-phone')?.value || '').trim();
+  const coin  = (document.getElementById('enq-coin')?.value  || '').trim();
+  const notes = (document.getElementById('enq-notes')?.value || '').trim();
+  const errBox = document.getElementById('form-error');
+  const btn    = document.getElementById('enq-submit');
+
+  /* validation */
+  if(!name || !email){
+    errBox.textContent = 'Please enter your full name and email address.';
+    errBox.style.display='block';
+    if(!name) document.getElementById('enq-name').focus();
+    else document.getElementById('enq-email').focus();
+    return;
+  }
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  if(!emailOk){
+    errBox.textContent = 'Please enter a valid email address.';
+    errBox.style.display='block';
+    document.getElementById('enq-email').focus();
+    return;
+  }
+  errBox.style.display='none';
+
+  /* loading state */
+  btn.textContent='Sending…';
+  btn.disabled=true;
+  btn.style.opacity='.6';
+
+  try {
+    const res = await fetch(LEAD_ENDPOINT, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        name, email, phone,
+        package: currentPackageTitle,
+        coin, notes
+      })
+    });
+    const data = await res.json();
+    if(!res.ok || !data.ok) throw new Error(data.error || 'Submission failed');
+
+    /* success screen */
+    document.getElementById('modalContent').innerHTML=`
+      <div style="text-align:center;padding:2.5rem 0">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:3rem;color:var(--gold);margin-bottom:1rem">✦</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--ivory);margin-bottom:.5rem">Enquiry Received</div>
+        ${data.leadId ? `<div style="font-size:.6rem;letter-spacing:.25em;color:var(--gold);margin-bottom:1.2rem">Reference: ${data.leadId}</div>` : ''}
+        <p style="font-size:.78rem;color:var(--muted);line-height:1.9;max-width:340px;margin:0 auto .8rem">
+          Thank you, <strong style="color:var(--champagne)">${name}</strong>. Your concierge will contact you at
+          <strong style="color:var(--champagne)">${email}</strong> within 2 hours.
+        </p>
+        <p style="font-size:.7rem;color:var(--gold-dim);letter-spacing:.1em">Please keep your preferred cryptocurrency ready.</p>
+      </div>`;
+  } catch(err){
+    btn.textContent='Submit Enquiry';
+    btn.disabled=false;
+    btn.style.opacity='1';
+    errBox.textContent='Something went wrong. Please try again or contact us directly.';
+    errBox.style.display='block';
+    console.error('Lead submit error:',err);
+  }
+}
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModalDirect();});
+</script>
+</body>
+</html>
