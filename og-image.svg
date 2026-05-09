@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <radialGradient id="bg" cx="60%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#1a160b"/>
+      <stop offset="50%" stop-color="#0e0d0b"/>
+      <stop offset="100%" stop-color="#050505"/>
+    </radialGradient>
+    <linearGradient id="goldShine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8a6f2e"/>
+      <stop offset="50%" stop-color="#e8c96a"/>
+      <stop offset="100%" stop-color="#c9a84c"/>
+    </linearGradient>
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(201,168,76,0.05)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- Gold border frame -->
+  <rect x="40" y="40" width="1120" height="550" fill="none" stroke="#c9a84c" stroke-width="1" opacity="0.4"/>
+  <rect x="48" y="48" width="1104" height="534" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.2"/>
+
+  <!-- Logo monogram top-left -->
+  <g transform="translate(80, 90)">
+    <rect x="0" y="0" width="60" height="60" fill="none" stroke="#c9a84c" stroke-width="1"/>
+    <text x="30" y="28" text-anchor="middle" font-family="Georgia, serif" font-size="22" font-weight="300" fill="#e8c96a" font-style="italic">V</text>
+    <text x="30" y="48" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#c9a84c" letter-spacing="1">26</text>
+  </g>
+  <text x="160" y="125" font-family="Georgia, serif" font-size="22" letter-spacing="6" fill="#e8c96a" font-weight="300">VANTAGE 26</text>
+
+  <!-- Eyebrow -->
+  <line x1="80" y1="220" x2="160" y2="220" stroke="#c9a84c" stroke-width="1.5"/>
+  <text x="180" y="225" font-family="'Helvetica Neue', sans-serif" font-size="14" letter-spacing="6" fill="#c9a84c">FIFA WORLD CUP 2026 · PRIVATE CONCIERGE</text>
+
+  <!-- Headline -->
+  <text x="80" y="310" font-family="Georgia, serif" font-size="80" font-weight="300" fill="#f9f4eb">The World's</text>
+  <text x="80" y="395" font-family="Georgia, serif" font-size="80" font-weight="300" font-style="italic" fill="url(#goldShine)">Greatest Match.</text>
+  <text x="80" y="480" font-family="Georgia, serif" font-size="80" font-weight="300" fill="#f9f4eb">Your Private Stage.</text>
+
+  <!-- Stats row -->
+  <g transform="translate(80, 530)">
+    <text x="0" y="0" font-family="Georgia, serif" font-size="32" fill="#e8c96a" font-weight="300">104</text>
+    <text x="0" y="20" font-family="'Helvetica Neue', sans-serif" font-size="11" letter-spacing="3" fill="#6b6456">MATCHES</text>
+
+    <line x1="120" y1="-20" x2="120" y2="20" stroke="rgba(201,168,76,0.3)"/>
+
+    <text x="150" y="0" font-family="Georgia, serif" font-size="32" fill="#e8c96a" font-weight="300">16</text>
+    <text x="150" y="20" font-family="'Helvetica Neue', sans-serif" font-size="11" letter-spacing="3" fill="#6b6456">HOST CITIES</text>
+
+    <line x1="280" y1="-20" x2="280" y2="20" stroke="rgba(201,168,76,0.3)"/>
+
+    <text x="310" y="0" font-family="Georgia, serif" font-size="32" fill="#e8c96a" font-weight="300">48</text>
+    <text x="310" y="20" font-family="'Helvetica Neue', sans-serif" font-size="11" letter-spacing="3" fill="#6b6456">NATIONS</text>
+  </g>
+
+  <!-- Right-side mark -->
+  <text x="1120" y="540" text-anchor="end" font-family="Georgia, serif" font-size="14" font-style="italic" fill="#6b6456">Hospitality · Aviation · Concierge</text>
+</svg>
